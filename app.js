@@ -19,7 +19,7 @@ app.set('view engine', 'ejs')
 app.use(logger('dev'))
 app.use(express.json())
 app.use(express.urlencoded({ extended: false }))
-app.use(cookieParser()) //модуль для роботи з кукі
+app.use(cookieParser(process.env.COOKIE_SECRET_KEY)) //модуль для роботи з кукі
 
 app.use(cors())
 
@@ -28,6 +28,7 @@ app.use(express.static(path.join(__dirname, 'public')))
 
 //підключення роутерів до програми
 app.use('/', indexRouter)
+app.use('/users', usersRouter)
 app.use('/users', usersRouter)
 
 // catch 404 and forward to error handler
