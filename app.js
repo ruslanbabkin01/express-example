@@ -19,12 +19,20 @@ app.set('view engine', 'ejs')
 app.use(logger('dev'))
 app.use(express.json())
 app.use(express.urlencoded({ extended: false }))
-app.use(cookieParser(process.env.COOKIE_SECRET_KEY)) //модуль для роботи з кукі
+app.use(cookieParser(process.env.SECRET_KEY)) //модуль для роботи з кукі
 
 app.use(cors())
 
 //обробка статичних ресурсів
 app.use(express.static(path.join(__dirname, 'public')))
+
+app.use(
+  require('express-session')({
+    resave: false,
+    saveUninitialized: false,
+    secret: process.env.SECRET_KEY,
+  })
+)
 
 //підключення роутерів до програми
 app.use('/', indexRouter)

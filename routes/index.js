@@ -3,7 +3,11 @@ const router = express.Router()
 
 /* GET home page. */
 router.get('/', (req, res, next) => {
-  res.render('index', { title: 'Express' })
+  req.session.views = req.session.views === void 0 ? 0 : ++req.session.views
+  res.render('index', {
+    title: 'Simple express app',
+    views: req.session.views,
+  })
 })
 
 router.post('/login', (req, res, next) => {
